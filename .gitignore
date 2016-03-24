@@ -4,3 +4,11 @@ Makefile
 OGaBoxProject.cbp
 cmake_install.cmake
 compile_commands.json
+*.vcxproj*
+*.sln
+Debug/
+Release/
+Win32/
+.vs/
+*.sdf
+*.VC.opendb
