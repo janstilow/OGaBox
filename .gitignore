@@ -4,8 +4,7 @@ Makefile
 OGaBoxProject.cbp
 cmake_install.cmake
 compile_commands.json
-*.vcxproj
-*.vcxproj.*
+*.vcxproj*
 *.sln
 Debug/
 Release/
