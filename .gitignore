@@ -12,3 +12,5 @@ Win32/
 .vs/
 *.sdf
 *.VC.opendb
+OGaBox
+OGaBoxProject.layout
