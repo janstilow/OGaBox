@@ -6,6 +6,7 @@
 #include <Poco/Net/HTTPServer.h>
 #include <Poco/Net/ServerSocket.h>
 #include <iostream>
+#include "Config.h"
 
 
 
@@ -47,14 +48,15 @@ class MyRequestHandlerFactory: public Poco::Net::HTTPRequestHandlerFactory
 
 int main(int argc, char **argv)
 {
+	Config::loadConfig("OGaBox.cfg");
 	std::cout << "OGaBox!Service v0.0" << std::endl;
-	Poco::UInt16 port = 8080;
+	Poco::UInt16 port = Config::getServerPort();
 	std::cout << "port: " << port << std::endl;
 
 	Poco::Net::HTTPServerParams* pParams = new Poco::Net::HTTPServerParams;
 
-	pParams->setMaxQueued(100);
-	pParams->setMaxThreads(16);
+	pParams->setMaxQueued(Config::getMaxQueued());
+	pParams->setMaxThreads(Config::getMaxThreads());
 	Poco::Net::ServerSocket svs(port);
 	Poco::Net::HTTPServer srv(new MyRequestHandlerFactory(), svs, pParams);
 	srv.start();
