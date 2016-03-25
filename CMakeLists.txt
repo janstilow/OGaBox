@@ -6,7 +6,11 @@ include_directories ("${PROJECT_SOURCE_DIR}/include")
 
 link_directories ("${PROJECT_SOURCE_DIR}/lib")
 
-add_executable(OGaBox "src/main.cpp")
+add_executable(OGaBox 
+		"src/main.cpp"
+		"src/FileHandler.cpp"
+		"src/OGaRequestHandlerFactory.cpp"
+	)
 
 target_link_libraries(OGaBox PocoNet PocoFoundation)
 
