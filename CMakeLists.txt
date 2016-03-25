@@ -16,12 +16,16 @@ add_executable(
 		"src/Config.cpp"
 		"src/Config.h"
 		"OGaBox.cfg")
-
-target_link_libraries(
-		OGaBox
-		PocoNet
-		PocoFoundation
-		PocoUtil)
+IF(MSVC)
+	target_link_libraries(
+			OGaBox)
+ELSE()
+	target_link_libraries(
+			OGaBox
+			PocoFoundation
+			PocoUtil
+			PocoNet)
+ENDIF()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
