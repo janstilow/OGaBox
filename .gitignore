@@ -14,4 +14,7 @@ Win32/
 *.VC.opendb
 OGaBox
 OGaBoxProject.layout
+*.swp
+Session.vim
+.ycm_extra_conf.*
 /OGa/*/nbproject/
