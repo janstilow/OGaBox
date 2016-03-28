@@ -10,7 +10,7 @@ if(DEFINED USE_POCO_DIR)
 	endif()
 	find_library(
 			OGaBox_PocoFoundation
-			"libPocoFoundation.so"
+			"PocoFoundation"
 			PATHS "${USE_POCO_DIR}/lib"
 			NO_DEFAULT_PATH)
 	find_library(
