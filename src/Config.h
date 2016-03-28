@@ -1,13 +1,13 @@
 #pragma once
 
 #include <Poco/Foundation.h>
-#include <string>
 
 
 
 namespace Config
 {
-	void loadConfig(std::string);
+	void initConfig(int argc, char **argv);
+
 	Poco::UInt16 getServerPort();
 	Poco::UInt32 getMaxQueued();
 	Poco::UInt32 getMaxThreads();
