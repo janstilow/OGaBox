@@ -1,6 +1,6 @@
 #include "Config.h"
 
-#include <Poco/Foundation.h>
+#include <Poco/Util/PropertyFileConfiguration.h>
 #include <iostream>
 #include <fstream>
 #include <cstring>
