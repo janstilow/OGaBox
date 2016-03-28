@@ -2,15 +2,15 @@
 #include <Poco/Net/HTTPServer.h>
 #include <Poco/Net/ServerSocket.h>
 #include <iostream>
-#include "Config.h"
 
+#include "Config.h"
 #include "OGaRequestHandlerFactory.h"
 
 
 
 int main(int argc, char **argv)
 {
-	Config::loadConfig("OGaBox.cfg");
+	Config::initConfig(argc, argv);
 	std::cout << "OGaBox!Service v0.0" << std::endl;
 	Poco::UInt16 port = Config::getServerPort();
 	std::cout << "port: " << port << std::endl;
