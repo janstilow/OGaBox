@@ -4,35 +4,34 @@ project("OGaBoxProject")
 
 
 
+function(findPocoLib pocoLibName)
+	unset("OGaBox_tmpOpt" CACHE)
+	unset("OGaBox_tmpDebug" CACHE)
+	find_library(
+			"OGaBox_tmpOpt"
+			"Poco${pocoLibName}"
+			PATHS "${USE_POCO_DIR}/lib"
+			NO_DEFAULT_PATH)
+	find_library(
+			"OGaBox_tmpDebug"
+			"Poco${pocoLibName}d"
+			PATHS "${USE_POCO_DIR}/lib"
+			NO_DEFAULT_PATH)
+	set("OGaBox_Poco${pocoLibName}" "${OGaBox_tmpOpt}" PARENT_SCOPE)
+	set("OGaBox_Poco${pocoLibName}d" "${OGaBox_tmpDebug}" PARENT_SCOPE)
+endfunction(findPocoLib)
+
+
+
 if(DEFINED USE_POCO_DIR)
 	if(NOT EXISTS "${USE_POCO_DIR}/include/Poco/Foundation.h")
 		message(FATAL_ERROR "Did not find POCO includes on '${USE_POCO_DIR}/includes'.")
 	endif()
-	find_library(
-			OGaBox_PocoFoundation
-			"PocoFoundation"
-			PATHS "${USE_POCO_DIR}/lib"
-			NO_DEFAULT_PATH)
-	find_library(
-			OGaBox_PocoUtil
-			"PocoUtil"
-			PATHS "${USE_POCO_DIR}/lib"
-			NO_DEFAULT_PATH)
-	find_library(
-			OGaBox_PocoNet
-			"PocoNet"
-			PATHS "${USE_POCO_DIR}/lib"
-			NO_DEFAULT_PATH)
-	find_library(
-			OGaBox_PocoJSON
-			"PocoJSON"
-			PATHS "${USE_POCO_DIR}/lib"
-			NO_DEFAULT_PATH)
-	find_library(
-			OGaBox_PocoXML
-			"PocoXML"
-			PATHS "${USE_POCO_DIR}/lib"
-			NO_DEFAULT_PATH)
+	findPocoLib("Foundation")
+	findPocoLib("Util")
+	findPocoLib("Net")
+	findPocoLib("JSON")
+	findPocoLib("XML")
 	if(
 			(NOT EXISTS "${OGaBox_PocoFoundation}")
 			OR (NOT EXISTS "${OGaBox_PocoUtil}")
@@ -64,12 +63,26 @@ add_executable(
 		"OGaBox.cfg")
 
 target_link_libraries(
-		OGaBox
+		OGaBox optimized
 		"${OGaBox_PocoFoundation}"
 		"${OGaBox_PocoUtil}"
 		"${OGaBox_PocoNet}"
 		"${OGaBox_PocoJSON}"
 		"${OGaBox_PocoXML}")
+if(
+		(NOT EXISTS "${OGaBox_PocoFoundationd}")
+		OR (NOT EXISTS "${OGaBox_PocoUtild}")
+		OR (NOT EXISTS "${OGaBox_PocoNetd}")
+		OR (NOT EXISTS "${OGaBox_PocoJSONd}")
+		OR (NOT EXISTS "${OGaBox_PocoXMLd}") )
+	target_link_libraries(
+			OGaBox debug
+			"${OGaBox_PocoFoundation}"
+			"${OGaBox_PocoUtil}"
+			"${OGaBox_PocoNet}"
+			"${OGaBox_PocoJSON}"
+			"${OGaBox_PocoXML}")
+endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
