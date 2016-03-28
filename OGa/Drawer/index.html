@@ -14,9 +14,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <link rel="stylesheet" href="drawer.css">
     </head>
     <body>
-        <div id="header"></div>
-        <canvas id="can-draw"></canvas>
-        <div id="footer"></div>
+        <div id="header">HEADER</div>
+        <div id="div-draw"><canvas id="can-draw"></canvas></div>
+        <div id="footer">FOOTER</div>
         <script src="jquery.min.js"></script>
         <script src="config.js"></script>
         <script>
@@ -50,8 +50,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             
             function resize()
             {
-                var wh = $(window).height()-($('#header').height()+$('#footer').height()+25);
-                var ww = $(window).width()-10;
+                var wh = $(window).height()-($('#header').height()+$('#footer').height()+ 30);
+                var ww = $(window).width()-30;
                 var can = $("#can-draw");
                 if(wh/ww>ASPECT_RATIO)
                 {

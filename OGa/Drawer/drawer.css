@@ -11,27 +11,54 @@ body
     text-align: center;
     margin: 0px;
     padding: 0px;
+    overflow: hidden;
+    font-size: 40px;
+    font-family: fantasy;
+    background-color: lightblue;
 }
 
 div
 {
-    margin: 5px;
-    padding: 5px;
+    margin: 0px;
+    padding: 0px;
+}
+
+canvas
+{
+    margin: 0px;
+    padding: 0px;
 }
 
 #can-draw 
 {
-    background-color: pink;
+    background-color: white;
+}
+
+#div-draw
+{
+    border: solid;
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: wheat;
 }
 
 #header
 {
     height: 50px;
-    background-color: lavender;
+    color: #222222;
+    background-color: #EEEEEE;
+    text-align: center;
 }
 
 #footer
 {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
     height: 50px;
-    background-color: violet;
+    color: #EEEEEE;
+    background-color: #222222;
+    text-align: center;
 }
