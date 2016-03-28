@@ -14,9 +14,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <link rel="stylesheet" href="drawer.css">
     </head>
     <body>
-        <canvas id="can-draw">
-            
-        </canvas>
+        <div id="header"></div>
+        <canvas id="can-draw"></canvas>
+        <div id="footer"></div>
         <script src="jquery.min.js"></script>
         <script src="config.js"></script>
         <script>
@@ -50,7 +50,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             
             function resize()
             {
-                var wh = $(window).height()-55;
+                var wh = $(window).height()-($('#header').height()+$('#footer').height()+25);
                 var ww = $(window).width()-10;
                 var can = $("#can-draw");
                 if(wh/ww>ASPECT_RATIO)
@@ -99,7 +99,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 mouseDown = false;
             });
             
-            $('#can-draw').on("touchout", function(e){
+            $('#can-draw').on("touchleave", function(e){
+                alert("asd");
                 if(mouseDown)
                 {
                     var mX = (e.originalEvent.touches[0].pageX - this.offsetLeft)/scale;
@@ -114,6 +115,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 mouseDown = true;
                 mouseX = (e.pageX - this.offsetLeft)/scale;
                 mouseY = (e.pageY - this.offsetTop)/scale;
+                drawpoint(mouseX,mouseY);
             });
             
             $('#can-draw').on("touchstart", function(e){
@@ -145,7 +147,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 mouseX = mX;
                 mouseY = mY;
             }
-
+            
+            function drawpoint(mX, mY)
+            {
+                
+                context.beginPath();
+                context.arc(mX,mY,1,0,2*Math.PI);
+                context.fill(); 
+                context.stroke();
+                
+                console.log("x:" + mouseX + " to " + mX + " | y:" + mouseY + " to " + mY);
+                
+                mouseX = mX;
+                mouseY = mY;
+            }
         </script>
     </body>
 </html>
