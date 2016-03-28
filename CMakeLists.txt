@@ -7,6 +7,7 @@ project("OGaBoxProject")
 function(findPocoLib pocoLibName)
 	unset("OGaBox_tmpOpt" CACHE)
 	unset("OGaBox_tmpDebug" CACHE)
+
 	find_library(
 			"OGaBox_tmpOpt"
 			"Poco${pocoLibName}"
@@ -17,8 +18,13 @@ function(findPocoLib pocoLibName)
 			"Poco${pocoLibName}d"
 			PATHS "${USE_POCO_DIR}/lib"
 			NO_DEFAULT_PATH)
+
 	set("OGaBox_Poco${pocoLibName}" "${OGaBox_tmpOpt}" PARENT_SCOPE)
-	set("OGaBox_Poco${pocoLibName}d" "${OGaBox_tmpDebug}" PARENT_SCOPE)
+	if(EXISTS "${OGaBox_tmpDebug}")
+		set("OGaBox_Poco${pocoLibName}d" "${OGaBox_tmpDebug}" PARENT_SCOPE)
+	else()
+		set("OGaBox_Poco${pocoLibName}d" "${OGaBox_tmpOpt}" PARENT_SCOPE)
+	endif()
 endfunction(findPocoLib)
 
 
@@ -69,20 +75,13 @@ target_link_libraries(
 		"${OGaBox_PocoNet}"
 		"${OGaBox_PocoJSON}"
 		"${OGaBox_PocoXML}")
-if(
-		(EXISTS "${OGaBox_PocoFoundationd}")
-		AND (EXISTS "${OGaBox_PocoUtild}")
-		AND (EXISTS "${OGaBox_PocoNetd}")
-		AND (EXISTS "${OGaBox_PocoJSONd}")
-		AND (EXISTS "${OGaBox_PocoXMLd}") )
-	target_link_libraries(
-			OGaBox debug
-			"${OGaBox_PocoFoundationd}"
-			"${OGaBox_PocoUtild}"
-			"${OGaBox_PocoNetd}"
-			"${OGaBox_PocoJSONd}"
-			"${OGaBox_PocoXMLd}")
-endif()
+target_link_libraries(
+		OGaBox debug
+		"${OGaBox_PocoFoundationd}"
+		"${OGaBox_PocoUtild}"
+		"${OGaBox_PocoNetd}"
+		"${OGaBox_PocoJSONd}"
+		"${OGaBox_PocoXMLd}")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
