@@ -4,6 +4,7 @@ Makefile
 OGaBoxProject.cbp
 cmake_install.cmake
 compile_commands.json
+install_manifest.txt
 *.vcxproj*
 *.sln
 Debug/
@@ -15,3 +16,7 @@ Win32/
 OGaBox
 OGaBoxProject.layout
 /OGa/*/nbproject/
+*.swp
+Session.vim
+.ycm_extra_conf.*
+
