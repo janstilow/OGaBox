@@ -70,18 +70,18 @@ target_link_libraries(
 		"${OGaBox_PocoJSON}"
 		"${OGaBox_PocoXML}")
 if(
-		(NOT EXISTS "${OGaBox_PocoFoundationd}")
-		OR (NOT EXISTS "${OGaBox_PocoUtild}")
-		OR (NOT EXISTS "${OGaBox_PocoNetd}")
-		OR (NOT EXISTS "${OGaBox_PocoJSONd}")
-		OR (NOT EXISTS "${OGaBox_PocoXMLd}") )
+		(EXISTS "${OGaBox_PocoFoundationd}")
+		AND (EXISTS "${OGaBox_PocoUtild}")
+		AND (EXISTS "${OGaBox_PocoNetd}")
+		AND (EXISTS "${OGaBox_PocoJSONd}")
+		AND (EXISTS "${OGaBox_PocoXMLd}") )
 	target_link_libraries(
 			OGaBox debug
-			"${OGaBox_PocoFoundation}"
-			"${OGaBox_PocoUtil}"
-			"${OGaBox_PocoNet}"
-			"${OGaBox_PocoJSON}"
-			"${OGaBox_PocoXML}")
+			"${OGaBox_PocoFoundationd}"
+			"${OGaBox_PocoUtild}"
+			"${OGaBox_PocoNetd}"
+			"${OGaBox_PocoJSONd}"
+			"${OGaBox_PocoXMLd}")
 endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
