@@ -19,3 +19,7 @@ OGaBoxProject.layout
 Session.vim
 .ycm_extra_conf.*
 /OGa/*/nbproject/
+*.swp
+Session.vim
+.ycm_extra_conf.*
+
