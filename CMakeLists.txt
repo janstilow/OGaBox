@@ -64,6 +64,8 @@ add_executable(
 		"src/FileHandler.h"
 		"src/OGaRequestHandlerFactory.cpp"
 		"src/OGaRequestHandlerFactory.h"
+		"src/OGaWebSocket.cpp"
+		"src/OGaWebSocket.h"
 		"src/Config.cpp"
 		"src/Config.h"
 		"OGaBox.cfg")
