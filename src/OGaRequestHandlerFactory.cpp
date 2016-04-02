@@ -25,10 +25,12 @@ Poco::Net::HTTPRequestHandler* OGaRequestHandlerFactory::createRequestHandler(
 	std::cout << "get URL: " << request.getURI() << std::endl;
 	if(request.getURI().compare("/ws") == 0)
 	{
+		std::cout << "a" << std::endl;
 		if(
 				request.find("Upgrade") != request.end() &&
 				Poco::icompare(request["Upgrade"], "websocket") == 0)
 		{
+			std::cout << "b" << std::endl;
 			return new OGaWebSocket();
 		}
 	}

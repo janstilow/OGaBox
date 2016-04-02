@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3.0)
 
 project("OGaBoxProject")
 
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 function(findPocoLib pocoLibName)
 	unset("OGaBox_tmpOpt" CACHE)
@@ -66,6 +66,14 @@ add_executable(
 		"src/OGaRequestHandlerFactory.h"
 		"src/OGaWebSocket.cpp"
 		"src/OGaWebSocket.h"
+		"src/OGaService.cpp"
+		"src/OGaService.h"
+		"src/OGaServiceContext.cpp"
+		"src/OGaServiceContext.h"
+		"src/OGaRoom.cpp"
+		"src/OGaRoom.h"
+		"src/OGaUser.cpp"
+		"src/OGaUser.h"
 		"src/Config.cpp"
 		"src/Config.h"
 		"OGaBox.cfg")

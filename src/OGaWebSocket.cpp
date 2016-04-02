@@ -1,9 +1,14 @@
 #include "OGaWebSocket.h"
 
+#include "OGaService.h"
+#include "OGaServiceContext.h"
+
 #include "Poco/Net/WebSocket.h"
 #include "Poco/Net/NetException.h"
 #include "Poco/Net/HTTPServerRequest.h"
 #include "Poco/Net/HTTPServerResponse.h"
+
+#include <iostream>
 
 
 
@@ -22,6 +27,7 @@ void OGaWebSocket::handleRequest(
 	namespace pnet = Poco::Net;
 	try
 	{
+		OGaServiceContext context = OGaService::getInstance().getContext(request);
 		Poco::Net::WebSocket ws(request, response);
 		char buffer[1024];
 		int flags;
@@ -29,6 +35,8 @@ void OGaWebSocket::handleRequest(
 		do
 		{
 			n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+			std::cout << "n: " << n << ", flags: " << flags << std::endl;
+			std::cout << "data: " << std::string(buffer, buffer + n) << std::endl;
 			ws.sendFrame(buffer, n, flags);
 		}
 		while(
@@ -37,7 +45,8 @@ void OGaWebSocket::handleRequest(
 	}
 	catch(Poco::Net::WebSocketException& exc)
 	{
-		switch (exc.code())
+		std::cout << "exc: " << exc.code() << std::endl;
+		switch(exc.code())
 		{
 			case Poco::Net::WebSocket::WS_ERR_HANDSHAKE_UNSUPPORTED_VERSION:
 				response.set("Sec-WebSocket-Version", Poco::Net::WebSocket::WEBSOCKET_VERSION);
@@ -52,3 +61,4 @@ void OGaWebSocket::handleRequest(
 		}
 	}
 }
+
