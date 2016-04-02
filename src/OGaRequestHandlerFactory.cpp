@@ -1,6 +1,7 @@
 #include "OGaRequestHandlerFactory.h"
 
 #include "FileHandler.h"
+#include "OGaWebSocket.h"
 
 #include <iostream>
 
@@ -24,7 +25,13 @@ Poco::Net::HTTPRequestHandler* OGaRequestHandlerFactory::createRequestHandler(
 	std::cout << "get URL: " << request.getURI() << std::endl;
 	if(request.getURI().compare("/ws") == 0)
 	{
-		
+		if(
+				request.find("Upgrade") != request.end() &&
+				Poco::icompare(request["Upgrade"], "websocket") == 0)
+		{
+			return new OGaWebSocket();
+		}
 	}
 	return new FileHandler();
 }
+
