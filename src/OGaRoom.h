@@ -21,6 +21,8 @@ class OGaRoom
 	public:
 		void addUser(std::shared_ptr<OGaUser> user);
 
+		void sendMessage(char *data, int len, int flags);
+
 	private:
 		Poco::Mutex mutex;
 		std::string id;

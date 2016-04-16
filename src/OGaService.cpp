@@ -9,6 +9,8 @@
 
 OGaService::OGaService()
 {
+	std::shared_ptr<OGaRoom> r( new OGaRoom("lobby") );
+	this->rooms.push_back(r);
 }
 
 
@@ -53,25 +55,24 @@ std::shared_ptr<OGaUser> OGaService::getUser(Poco::Net::HTTPServerRequest &reque
 
 std::shared_ptr<OGaRoom> OGaService::getRoom(Poco::Net::HTTPServerRequest &request)
 {
-	std::string rid = "roomid";
+	std::string rid = "";
 	return this->findOrCreateRoom(rid);
 }
 
 std::shared_ptr<OGaUser> OGaService::findOrCreateUser(const std::string &uid)
 {
-	typedef std::vector< std::shared_ptr<OGaUser> > t_uv;
-	for(t_uv::iterator i = this->users.begin(); i != this->users.end(); ++i)
-	{
-		if( (*i)->isThisUser(uid) )
-		{
-			return *i;
-		}
-	}
-
 	if(uid.length() == 0)
 	{
 		std::shared_ptr<OGaUser> u( new OGaUser( this->getUUID() ) );
 		return u;
+	}
+
+	for(std::shared_ptr<OGaUser> i: this->users)
+	{
+		if( i->isThisUser(uid) )
+		{
+			return i;
+		}
 	}
 
 	std::shared_ptr<OGaUser> u( new OGaUser(uid) );
@@ -80,8 +81,12 @@ std::shared_ptr<OGaUser> OGaService::findOrCreateUser(const std::string &uid)
 
 std::shared_ptr<OGaRoom> OGaService::findOrCreateRoom(const std::string &rid)
 {
-	std::shared_ptr<OGaRoom> r( new OGaRoom(rid) );
-	return r;
+	if(rid.length() > 0)
+	{
+		std::shared_ptr<OGaRoom> r( new OGaRoom(rid) );
+		return r;
+	}
+	return this->rooms[0];
 }
 
 std::string OGaService::getSaveCollectionValue(

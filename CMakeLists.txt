@@ -66,6 +66,8 @@ add_executable(
 		"src/OGaRequestHandlerFactory.h"
 		"src/OGaWebSocket.cpp"
 		"src/OGaWebSocket.h"
+		"src/OGaUserSocket.cpp"
+		"src/OGaUserSocket.h"
 		"src/OGaService.cpp"
 		"src/OGaService.h"
 		"src/OGaServiceContext.cpp"

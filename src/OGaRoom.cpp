@@ -1,5 +1,7 @@
 #include "OGaRoom.h"
 
+#include "OGaUser.h"
+
 #include <iostream>
 
 
@@ -16,5 +18,30 @@ bool OGaRoom::isThisRoom(const std::string &id)
 		return true;
 	}
 	return false;
+}
+
+void OGaRoom::addUser(std::shared_ptr<OGaUser> user)
+{
+	Poco::ScopedLock<Poco::Mutex> lock(this->mutex);
+
+	for(std::shared_ptr<OGaUser> u: this->users)
+	{
+		if( u.get() == user.get() )
+		{
+			return;
+		}
+	}
+
+	this->users.push_back(user);
+}
+
+void OGaRoom::sendMessage(char *data, int len, int flags)
+{
+	Poco::ScopedLock<Poco::Mutex> lock(this->mutex);
+
+	for(std::shared_ptr<OGaUser> u: this->users)
+	{
+		u->sendMessage(data, len, flags);
+	}
 }
 

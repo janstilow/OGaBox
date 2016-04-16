@@ -2,11 +2,12 @@
 
 #include "OGaService.h"
 #include "OGaServiceContext.h"
+#include "OGaUserSocket.h"
 
-#include "Poco/Net/WebSocket.h"
-#include "Poco/Net/NetException.h"
-#include "Poco/Net/HTTPServerRequest.h"
-#include "Poco/Net/HTTPServerResponse.h"
+#include <Poco/Net/WebSocket.h>
+#include <Poco/Net/NetException.h>
+#include <Poco/Net/HTTPServerRequest.h>
+#include <Poco/Net/HTTPServerResponse.h>
 
 #include <iostream>
 
@@ -27,8 +28,14 @@ void OGaWebSocket::handleRequest(
 	namespace pnet = Poco::Net;
 	try
 	{
-		OGaServiceContext context = OGaService::getInstance().getContext(request);
 		Poco::Net::WebSocket ws(request, response);
+
+		OGaServiceContext context = OGaService::getInstance().getContext(request);
+		std::shared_ptr<OGaUser> user = context.getUser();
+		std::shared_ptr<OGaRoom> room = context.getRoom();
+		room->addUser(user);
+		OGaUserSocket usock(ws, user);
+
 		char buffer[1024];
 		int flags;
 		int n;
@@ -37,7 +44,7 @@ void OGaWebSocket::handleRequest(
 			n = ws.receiveFrame(buffer, sizeof(buffer), flags);
 			std::cout << "n: " << n << ", flags: " << flags << std::endl;
 			std::cout << "data: " << std::string(buffer, buffer + n) << std::endl;
-			ws.sendFrame(buffer, n, flags);
+			room->sendMessage(buffer, n, flags);
 		}
 		while(
 				n > 0 ||
