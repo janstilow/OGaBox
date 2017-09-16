@@ -60,14 +60,14 @@ endif()
 add_executable(
 		OGaBox 
 		"src/main.cpp"
+		"src/Environment.cpp"
+		"src/Environment.h"
 		"src/FileHandler.cpp"
 		"src/FileHandler.h"
 		"src/OGaRequestHandlerFactory.cpp"
 		"src/OGaRequestHandlerFactory.h"
 		"src/OGaWebSocket.cpp"
 		"src/OGaWebSocket.h"
-		"src/OGaUserSocket.cpp"
-		"src/OGaUserSocket.h"
 		"src/OGaService.cpp"
 		"src/OGaService.h"
 		"src/OGaServiceContext.cpp"
@@ -76,6 +76,8 @@ add_executable(
 		"src/OGaRoom.h"
 		"src/OGaUser.cpp"
 		"src/OGaUser.h"
+		"src/OGaWorker.cpp"
+		"src/OGaWorker.h"
 		"src/Config.cpp"
 		"src/Config.h"
 		"OGaBox.cfg")
@@ -86,14 +88,16 @@ target_link_libraries(
 		"${OGaBox_PocoUtil}"
 		"${OGaBox_PocoNet}"
 		"${OGaBox_PocoJSON}"
-		"${OGaBox_PocoXML}")
+		"${OGaBox_PocoXML}"
+		"pthread")
 target_link_libraries(
 		OGaBox debug
 		"${OGaBox_PocoFoundationd}"
 		"${OGaBox_PocoUtild}"
 		"${OGaBox_PocoNetd}"
 		"${OGaBox_PocoJSONd}"
-		"${OGaBox_PocoXMLd}")
+		"${OGaBox_PocoXMLd}"
+		"pthread")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 

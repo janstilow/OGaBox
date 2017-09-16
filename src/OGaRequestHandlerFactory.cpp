@@ -7,7 +7,8 @@
 
 
 
-OGaRequestHandlerFactory::OGaRequestHandlerFactory()
+OGaRequestHandlerFactory::OGaRequestHandlerFactory(Environment &environment):
+	environment(environment)
 {
 
 }
@@ -31,7 +32,7 @@ Poco::Net::HTTPRequestHandler* OGaRequestHandlerFactory::createRequestHandler(
 				Poco::icompare(request["Upgrade"], "websocket") == 0)
 		{
 			std::cout << "b" << std::endl;
-			return new OGaWebSocket();
+			return new OGaWebSocket(this->environment);
 		}
 	}
 	return new FileHandler();

@@ -5,7 +5,7 @@
 
 #include "Config.h"
 #include "OGaRequestHandlerFactory.h"
-
+#include "Environment.h"
 
 
 int main(int argc, char **argv)
@@ -17,10 +17,13 @@ int main(int argc, char **argv)
 
 	Poco::Net::HTTPServerParams* pParams = new Poco::Net::HTTPServerParams;
 
+	Environment environment;
+
 	pParams->setMaxQueued(Config::getMaxQueued());
 	pParams->setMaxThreads(Config::getMaxThreads());
 	Poco::Net::ServerSocket svs(port);
-	Poco::Net::HTTPServer srv(new OGaRequestHandlerFactory(), svs, pParams);
+	Poco::Net::HTTPServer srv(new OGaRequestHandlerFactory(environment), svs, pParams);
+
 	srv.start();
 
 	std::cout << "Hit return to quit service." << std::endl;

@@ -4,23 +4,23 @@
 
 
 
-OGaUser::OGaUser(const std::string &id)
+OGaUser::OGaUser(const std::string &uuid)
 {
-	std::cout << "new user created: " << id << std::endl;
-	this->id = id;
+	std::cout << "new user created: " << uuid << std::endl;
+	this->uuid = uuid;
 	this->webSocket = 0;
 }
 
-bool OGaUser::isThisUser(const std::string &id) const
+bool OGaUser::isThisUser(const std::string &uuid) const
 {
-	if(this->id.compare(id) == 0)
+	if(this->uuid.compare(uuid) == 0)
 	{
 		return true;
 	}
 	return false;
 }
 
-void OGaUser::setWebSocket(Poco::Net::WebSocket *w)
+void OGaUser::setWebSocket(std::shared_ptr<Poco::Net::WebSocket> w)
 {
 	Poco::ScopedLock<Poco::Mutex> lock(this->mutex);
 
@@ -32,14 +32,14 @@ void OGaUser::setWebSocket(Poco::Net::WebSocket *w)
 	this->webSocket = w;
 }
 
-void OGaUser::clearWebSocket(Poco::Net::WebSocket *w)
+std::string OGaUser::getUUID()
 {
-	Poco::ScopedLock<Poco::Mutex> lock(this->mutex);
+	return this->uuid;
+}
 
-	if(this->webSocket == w)
-	{
-		this->webSocket = 0;
-	}
+std::shared_ptr<Poco::Net::WebSocket> OGaUser::getWebSocket()
+{
+    return this->webSocket;
 }
 
 void OGaUser::sendMessage(char *data, int len, int flags)

@@ -3,12 +3,13 @@
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 
+#include "Environment.h"
 
 
 class OGaRequestHandlerFactory: public Poco::Net::HTTPRequestHandlerFactory
 {
 	public:
-		OGaRequestHandlerFactory();
+		OGaRequestHandlerFactory(Environment &environment);
 		virtual ~OGaRequestHandlerFactory();
 
 		Poco::Net::HTTPRequestHandler* createRequestHandler(
@@ -17,4 +18,5 @@ class OGaRequestHandlerFactory: public Poco::Net::HTTPRequestHandlerFactory
 	protected:
 
 	private:
+		Environment &environment;
 };
